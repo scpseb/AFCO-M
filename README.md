@@ -5,7 +5,7 @@
 ![Framework](https://img.shields.io/badge/Framework-Arduino%20(PlatformIO)-orange)
 ![Capstone](https://img.shields.io/badge/Project-Capstone%20Design-purple)
 
-> **Informasi Akademik:** Proyek ini dikembangkan khusus sebagai purwarupa (prototipe) untuk pemenuhan tugas **Capstone Design**.
+> **Informasi Akademik:** Proyek ini dikembangkan khusus sebagai purwarupa (prototipe) untuk pemenuhan tugas **Capstone Design** Prodi S1 Teknik Elektro Fakultas Teknik Elektro Telkom University.
 
 Proyek **CD AFCO-M** adalah prototipe mesin industri otomatis berbasis mikrokontroler **ESP32-S3** yang dirancang untuk melakukan pengisian cairan (filling) dan penutupan botol (capping) secara berkelanjutan menggunakan mekanisme *Rotary Table* (meja putar). Proyek ini dirancang dengan arsitektur multi-stasiun yang berjalan secara simultan untuk efisiensi produksi.
 
@@ -21,7 +21,7 @@ Proyek Capstone Design ini didesain, dirakit, dan diprogram oleh:
 4. **[Fathi Rachman Marpaung]** - [101022300252] - *(Hardware Engineer & System Integrator)*
 
 Dosen pendamping:
-**Husneni Mukhtar, S.Si, M.T., Ph.D** - *Dosen Pendamping 1*
+**Husneni Mukhtar, S.Si, M.T., Ph.D** - Dosen Pendamping 1
 ---
 
 ## ✨ Fitur Utama
