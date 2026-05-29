@@ -3,9 +3,9 @@
 
 // --- DEFINISI PIN ---
 const int WATER_SENSOR_PIN = 4; // [cite: 58]
-const int SERVO_1_PIN = 5;      // [cite: 58]
+const int PIN_SERVO_1 = 5;      // [cite: 58]
 const int IR_SENSOR_PIN = 6;    // [cite: 58]
-const int SERVO_2_PIN = 7;      // [cite: 59]
+const int PIN_SERVO_2 = 7;      // [cite: 59]
 const int DIR_PIN = 8;          // [cite: 59]
 const int STEP_PIN = 9;         // [cite: 59]
 const int EN_IR_PIN = 10;       // Pin baru untuk Enable Sensor IR
@@ -47,12 +47,12 @@ void setup() {
   digitalWrite(EN_IR_PIN, LOW);
 
   // Inisialisasi Pin Servo
-  servo1.attach(SERVO_1_PIN);
-  servo2.attach(SERVO_2_PIN);
+  servo1.attach(PIN_SERVO_1);
+  servo2.attach(PIN_SERVO_2);
 
   // Posisi Awal 
-  servo1.write(POS_BUKA); 
-  servo2.write(POS_BUKA); 
+  servo1.write(PIN_SERVO_1,POS_BUKA); 
+  servo2.write(PIN_SERVO_2,POS_BUKA); 
   
   Serial.println("=== Mesin Dinyalakan ===");
 }
@@ -62,7 +62,7 @@ void loop() {
   
   // 1. Servo 1 Membuka & Menunggu Air
   Serial.println("Servo 1 Membuka. Menunggu air...");
-  servo1.write(POS_BUKA);
+  servo1.write(PIN_SERVO_1,POS_BUKA);
 
   while (digitalRead(WATER_SENSOR_PIN) == LOW) {
     delay(50); 
@@ -70,7 +70,7 @@ void loop() {
 
   // 2. Air Terdeteksi, Servo 1 Bergerak Tutup
   Serial.println("Air TERDETEKSI! Servo 1 menutup (90 derajat)...");
-  servo1.write(POS_TUTUP);
+  servo1.write(PIN_SERVO_1,POS_TUTUP);
   delay(3000); 
 
   // 3. Rotary Table Memutar 1 Step (45 Derajat)
@@ -99,11 +99,11 @@ void loop() {
   if (digitalRead(IR_SENSOR_PIN) == LOW) { 
     Serial.println("Botol Terdeteksi! Servo 2 bergerak (Memulai Filling)...");
     
-    servo2.write(POS_TUTUP); 
+    servo2.write(PIN_SERVO_2,POS_TUTUP); 
     delay(5000); // Waktu filling 5 detik
     
     Serial.println("Filling Selesai 5 Detik. Servo 2 kembali ke posisi awal.");
-    servo2.write(POS_BUKA);
+    servo2.write(PIN_SERVO_2,POS_BUKA);
     delay(3000); 
     
   } else {

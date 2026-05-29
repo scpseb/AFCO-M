@@ -32,8 +32,8 @@ const int PIN_IR_EN_FILL = 10;
 // --- KONFIGURASI MOTOR ---
   // ROTARY
 const int STEPS_PER_STATION = 600; // Untuk microstepping 1/8 dan puli 1:3
-const int DELAY_AWAL = 2200; 
-const int DELAY_MIN = 500;   
+const int DELAY_AWAL = 1800; //2200
+const int DELAY_MIN = 400;  //500
   // CAPPING
 int LANGKAH_TURUN_CAPPING = 1400;
 int JEDA_KECEPATAN_CAP = 500;
@@ -114,7 +114,7 @@ void eksekusiFilling() {
 void eksekusiCapping() {
   Serial.println("-> Mengecek Botol di Stasiun Capping...");
   digitalWrite(PIN_IR_EN_CAP, HIGH);
-  delay(200);
+  delay(1500);
 
   if (digitalRead(PIN_IR_OUT_CAP) == LOW) {
     Serial.println("-> Botol terdeteksi! Memulai Capping.");
@@ -152,7 +152,8 @@ void eksekusiCapping() {
 void setup() {
   Serial.begin(115200);
   delay(2000);
-  
+  // Setup Button
+  pinMode(PIN_TOMBOL, INPUT_PULLUP);
   // Setup Pin Stepper Rotary & Stepper Capping
   pinMode(STEP_PIN_ROTARY, OUTPUT);
   pinMode(DIR_PIN_ROTARY, OUTPUT);
@@ -203,6 +204,7 @@ void loop() {
   Serial.println("=================================");
   
   // 1. Pastikan tangki sementara penuh sebelum siklus putaran dimulai
+  if (hitunganSiklus <4){
   persiapanTangkiSementara();
 
   // 2. Putar meja 1 stasiun (45 derajat)
@@ -214,16 +216,25 @@ void loop() {
   Serial.println("--- Inspeksi Stasiun Aktif ---");
   
   // A. Lakukan proses Filling jika ada botol di stasiun pengisian
-  eksekusiFilling();
   
-  // B. Lakukan proses Capping jika ada botol di stasiun penutupan
-  eksekusiCapping();
+  eksekusiFilling();
+  }
+  
+  
+  // B. Lakukan proses Capping jika ada botol di stasiun penutupan setelah semua proses filling selesai
+  if (hitunganSiklus >= 4) {
+    eksekusiCapping();
+
+    RotarySpin(STEPS_PER_STATION);
+    delay(1000);
+  }
+  
   
   // 4. Tambah nilai penghitung siklus setelah 1 kali meja bergerak
   hitunganSiklus++;
 
   // 5. Cek apakah sudah mencapai batas 8 kali jalan (1 Batch penuh)
-  if (hitunganSiklus >= 8) {
+  if (hitunganSiklus >= 9) {
     Serial.println("\n[INFO BATCH SELESAI] Rotary Table telah berputar 8 langkah.");
     Serial.println("Sistem dijeda otomatis. Menunggu konfirmasi tombol kembali...");
     
